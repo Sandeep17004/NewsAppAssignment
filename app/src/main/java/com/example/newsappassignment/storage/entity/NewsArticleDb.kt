@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.newsappassignment.storage.entity.NewsArticleDb.NewsArticles.tableName
 import com.example.newsappassignment.storage.entity.NewsArticleDb.NewsArticles.Column
+import com.example.newsappassignment.storage.entity.NewsArticleDb.NewsArticles.tableName
 
 
 @Entity(tableName = tableName)
@@ -50,7 +50,7 @@ data class NewsArticleDb(
     val publishedAt: String? = null,
 
     @Embedded(prefix = "source_")
-    val source: Source,
+    val source: Source? = null,
 
     @ColumnInfo(name = Column.content)
     val content: String? = null

@@ -5,6 +5,16 @@ buildscript {
         ext.coroutinesVersion = '1.3.9'
         roomVersion = "2.2.3"
         ext.coilVersion = "0.11.0"
+        // Testing
+        mockitoKotlin = "2.2.0"
+        jsonTest = "20200518"
+        androidxTest = "1.2.0"
+        junit="4.12"
+        junitVersion="1.1.0"
+        mockitoVersion="2.24.5"
+        junitExtensionVerstion="1.1.1"
+        espressoCore="3.2.0"
+        okhttpVersion = "4.7.2"
     }
     repositories {
         google()
