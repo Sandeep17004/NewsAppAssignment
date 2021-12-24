@@ -18,7 +18,7 @@ abstract class BaseRepository {
         }
     }
 
-    suspend inline fun <reified T> processForError(
+    inline fun <reified T> processForError(
         throwable: Throwable
     ): NetworkResource<T> {
         return NetworkResource.error(throwable, null)

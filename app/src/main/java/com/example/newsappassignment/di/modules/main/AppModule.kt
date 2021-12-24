@@ -5,6 +5,7 @@ import com.example.newsappassignment.BuildConfig
 import com.example.newsappassignment.MainApplication
 import com.example.newsappassignment.api.NewsApiInterface
 import com.example.newsappassignment.storage.AppDatabase
+import com.example.newsappassignment.storage.NewsDatabaseMigration
 import com.example.newsappassignment.utils.Config
 import dagger.Module
 import dagger.Provides
@@ -36,7 +37,7 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providesRetrofit(client: OkHttpClient): Retrofit {
+    fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Config.BASE_URL_NEWS)
             .addConverterFactory(GsonConverterFactory.create())
@@ -54,7 +55,7 @@ class AppModule {
     fun provideAppDatabase(application: MainApplication): AppDatabase {
         return Room
             .databaseBuilder(application, AppDatabase::class.java, AppDatabase.DATABASE_NAME)
-            .fallbackToDestructiveMigration() // get correct db version if schema changed
+            .addMigrations(*NewsDatabaseMigration.allMigrations) // get correct db version if schema changed
             .build()
     }
 }

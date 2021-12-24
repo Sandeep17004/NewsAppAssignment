@@ -13,39 +13,21 @@ data class NewsArticleDb(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
-    /**
-     * Name of the author for the article
-     */
     @ColumnInfo(name = Column.author)
     val author: String? = null,
 
-    /**
-     * Title of the article
-     */
     @ColumnInfo(name = Column.title)
     val title: String? = null,
 
-    /**
-     * Complete description of the article
-     */
     @ColumnInfo(name = Column.description)
     val description: String? = null,
 
-    /**
-     * URL to the article
-     */
     @ColumnInfo(name = Column.url)
     val url: String? = null,
 
-    /**
-     * URL of the artwork shown with article
-     */
     @ColumnInfo(name = Column.urlToImage)
     val urlToImage: String? = null,
 
-    /**
-     * Date-time when the article was published
-     */
     @ColumnInfo(name = Column.publishedAt)
     val publishedAt: String? = null,
 

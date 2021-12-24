@@ -18,6 +18,7 @@ class NewsArticlesAdapter :
         RecyclerView.ViewHolder(viewBinding.root) {
         fun bind(holderData: NewsArticleDb) {
             viewBinding.modelClass = holderData
+            viewBinding.executePendingBindings()
         }
     }
 
