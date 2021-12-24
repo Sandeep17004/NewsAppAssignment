@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">NewsAppAssignment</string>
+    <string name="no_news_found">No News Found!</string>
 </resources>

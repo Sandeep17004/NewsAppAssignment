@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="constant"
+            type="com.example.newsappassignment.utils.CommonUtility" />
+
+        <variable
+            name="modelClass"
+            type="com.example.newsappassignment.storage.entity.NewsArticleDb" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_6sp"
+        app:cardElevation="@dimen/dimen_6sp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black">
+
+            <ImageView
+                android:id="@+id/newsImage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_image_height"
+                android:scaleType="centerCrop"
+                app:articleImage="@{modelClass.urlToImage}" />
+
+            <TextView
+                android:id="@+id/newsTitle"
+                style="@style/NewsArticleTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/newsImage"
+                android:text="@{modelClass.title}" />
+
+            <TextView
+                style="@style/NewsArticleTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/newsTitle"
+                android:text="@{constant.Companion.formatTime(modelClass.publishedAt)}" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

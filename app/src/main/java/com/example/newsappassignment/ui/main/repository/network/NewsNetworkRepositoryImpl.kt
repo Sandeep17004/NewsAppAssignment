@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class NewsNetworkRepositoryImpl @Inject constructor(private var api: NewsApiInterface) :
     NewsNetworkRepository {
-    override suspend fun fetchLatestNews(): List<NewsResponse> {
+    override suspend fun fetchLatestNews(): NewsResponse {
         return api.fetchHeadLines()
     }
 }

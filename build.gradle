@@ -2,6 +2,9 @@
 buildscript {
     ext {
         kotlin_version = "1.4.32"
+        ext.coroutinesVersion = '1.3.9'
+        roomVersion = "2.2.3"
+        ext.coilVersion = "0.11.0"
     }
     repositories {
         google()

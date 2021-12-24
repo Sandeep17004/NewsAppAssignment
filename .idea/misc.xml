@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/NewsAppAssignment/app/src/main/res/layout/main_fragment.xml" value="0.1" />
+        <entry key="..\:/NewsAppAssignment/app/src/main/res/drawable/placeholder_image.xml" value="0.1935185185185185" />
+        <entry key="..\:/NewsAppAssignment/app/src/main/res/drawable/recycler_divider.xml" value="0.20416666666666666" />
+        <entry key="..\:/NewsAppAssignment/app/src/main/res/layout/main_fragment.xml" value="0.176" />
+        <entry key="..\:/NewsAppAssignment/app/src/main/res/layout/news_article_adapter_layout.xml" value="0.264" />
       </map>
     </option>
   </component>

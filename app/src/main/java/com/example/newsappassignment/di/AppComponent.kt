@@ -4,16 +4,17 @@ import com.example.newsappassignment.MainApplication
 import com.example.newsappassignment.di.modules.activity.MainActivityBuildersModule
 import com.example.newsappassignment.di.modules.main.AppModule
 import com.example.newsappassignment.di.modules.main.ViewModelFactoryModule
+import com.example.newsappassignment.di.modules.main.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 
 @Singleton
 @Component(
-    modules = [AndroidInjectionModule::class, AppModule::class, ViewModelFactoryModule::class, MainActivityBuildersModule::class]
+    modules = [AndroidSupportInjectionModule::class, AppModule::class, ViewModelFactoryModule::class, ViewModelModule::class, MainActivityBuildersModule::class]
 )
 
 interface AppComponent : AndroidInjector<MainApplication> {

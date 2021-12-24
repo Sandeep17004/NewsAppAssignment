@@ -1,32 +1,79 @@
 package com.example.newsappassignment.ui.main
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.newsappassignment.R
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.newsappassignment.databinding.MainFragmentBinding
+import com.example.newsappassignment.di.modules.main.ViewModelProvidersFactory
+import com.example.newsappassignment.storage.entity.NewsArticleDb
+import com.example.newsappassignment.ui.main.adapter.NewsArticlesAdapter
+import com.example.newsappassignment.ui.main.viewmodels.NewsViewModel
+import com.example.newsappassignment.utils.NetworkResource
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class MainFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
+class MainFragment @Inject constructor() :
+    DaggerFragment(){
 
-    private lateinit var viewModel: MainViewModel
+    @Inject
+    lateinit var providersFactory: ViewModelProvidersFactory
 
+    @Inject
+    lateinit var newsArticleAdapter: NewsArticlesAdapter
+    private lateinit var newsViewModel: NewsViewModel
+    lateinit var viewBinding: MainFragmentBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        viewBinding = MainFragmentBinding.inflate(layoutInflater)
+        return viewBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        newsViewModel = ViewModelProvider(this, providersFactory).get(NewsViewModel::class.java)
+        newsViewModel.loadNewsHeadlines()
+        observeViewModel()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewBinding.rvNews.apply {
+            adapter = newsArticleAdapter
+            layoutManager = LinearLayoutManager(view.context)
+        }
+    }
+
+    private fun observeViewModel() {
+        newsViewModel.getNewsHeadlines().observe(this, { resObj ->
+            when (resObj.status) {
+                NetworkResource.Status.LOADING -> {
+                    viewBinding.showLoading = true
+                }
+                NetworkResource.Status.ERROR -> {
+                    viewBinding.showLoading = false
+                    Toast.makeText(
+                        requireContext(),
+                        resObj.throwable.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                NetworkResource.Status.SUCCESS -> {
+                    viewBinding.showLoading = false
+                    if (resObj.data?.isNotEmpty() == true) {
+                        viewBinding.noNewsFound = false
+                        newsArticleAdapter.addDataToAdapter(resObj.data)
+                    } else {
+                        viewBinding.noNewsFound = true
+                    }
+                }
+            }
+        })
+    }
 }

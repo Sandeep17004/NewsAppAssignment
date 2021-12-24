@@ -1,6 +1,9 @@
 package com.example.newsappassignment.di.modules.main
 
-import com.example.newsappassignment.api.NewsApiInterface
+import com.example.newsappassignment.storage.AppDatabase
+import com.example.newsappassignment.storage.NewsArticleDao
+import com.example.newsappassignment.ui.main.MainFragment
+import com.example.newsappassignment.ui.main.adapter.NewsArticlesAdapter
 import com.example.newsappassignment.ui.main.repository.NewsRepository
 import com.example.newsappassignment.ui.main.repository.NewsRepositoryImpl
 import com.example.newsappassignment.ui.main.repository.network.NewsNetworkRepository
@@ -9,29 +12,21 @@ import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import retrofit2.Retrofit
 import javax.inject.Named
 
 @Module
 class MainModule {
-    val mainDispatcher: CoroutineDispatcher = Dispatchers.Main
-    val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-
-    @Provides
-    fun provideNewsApiInterface(retrofit: Retrofit): NewsApiInterface {
-        return retrofit.create(NewsApiInterface::class.java)
-    }
 
     @Provides
     @Named("IO")
     fun provideIOCoroutineDispatcher(): CoroutineDispatcher {
-        return ioDispatcher
+        return Dispatchers.IO
     }
 
     @Provides
     @Named("MAIN")
     fun provideMainCoroutineDispatcher(): CoroutineDispatcher {
-        return mainDispatcher
+        return Dispatchers.Main
     }
 
     @Provides
@@ -42,5 +37,20 @@ class MainModule {
     @Provides
     fun provideNewsNetworkRepository(network: NewsNetworkRepositoryImpl): NewsNetworkRepository {
         return network
+    }
+
+    @Provides
+    fun provideNewsDao(db: AppDatabase): NewsArticleDao {
+        return db.newsArticleDao()
+    }
+
+    @Provides
+    fun provideMainFragment(): MainFragment {
+        return MainFragment()
+    }
+
+    @Provides
+    fun provideNewsArticleAdapter(): NewsArticlesAdapter {
+        return NewsArticlesAdapter()
     }
 }

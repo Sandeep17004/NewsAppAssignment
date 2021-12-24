@@ -1,8 +1,12 @@
 package com.example.newsappassignment.di.modules.main
 
+import androidx.room.Room
 import com.example.newsappassignment.BuildConfig
+import com.example.newsappassignment.MainApplication
 import com.example.newsappassignment.api.NewsApiInterface
+import com.example.newsappassignment.storage.AppDatabase
 import com.example.newsappassignment.utils.Config
+import dagger.Module
 import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -11,6 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+@Module
 class AppModule {
 
     private val loggingInterceptor =
@@ -42,4 +47,14 @@ class AppModule {
     @Provides
     fun providesApiService(retrofit: Retrofit): NewsApiInterface =
         retrofit.create(NewsApiInterface::class.java)
+
+
+    @Singleton
+    @Provides
+    fun provideAppDatabase(application: MainApplication): AppDatabase {
+        return Room
+            .databaseBuilder(application, AppDatabase::class.java, AppDatabase.DATABASE_NAME)
+            .fallbackToDestructiveMigration() // get correct db version if schema changed
+            .build()
+    }
 }
